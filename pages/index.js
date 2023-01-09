@@ -55,6 +55,9 @@ const Home = () => {
       },
       body: JSON.stringify({ input: finalInput }),
     });
+    
+    console.log(response)
+
 
     const data = await response.json();
 
