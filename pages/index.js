@@ -45,7 +45,8 @@ const Home = () => {
     }
 
     const finalInput = input.replace("a chad", 'sne1z');
-
+    console.log(finalInput)
+    
     // Add the fetch request
     const response = await fetch('/api/generate', {
       method: 'POST',
