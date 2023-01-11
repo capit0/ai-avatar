@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 
 const Home = () => {
-  const maxRetries = 20;
+  const maxRetries = 40;
 
   const [input, setInput] = useState('');
   const [img, setImg] = useState('');
@@ -17,6 +21,8 @@ const Home = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const [finalPrompt, setFinalPrompt] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
 
   const onChange = (event) => {
     setInput(event.target.value);
@@ -45,6 +51,7 @@ const Home = () => {
     }
 
     const finalInput = input.replace("a chad", 'sne1z');
+    console.log(finalInput)
 
     // Add the fetch request
     const response = await fetch('/api/generate', {
@@ -54,6 +61,9 @@ const Home = () => {
       },
       body: JSON.stringify({ input: finalInput }),
     });
+
+    console.log(response)
+
 
     const data = await response.json();
 
@@ -85,6 +95,11 @@ const Home = () => {
       setTimeout(resolve, ms);
     });
   };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  }
+
 
   useEffect(() => {
     const runRetry = async () => {
@@ -125,26 +140,40 @@ const Home = () => {
             <h2>
               Describe any type of charachter and use "a chad" as the name of your subject
             </h2>
-
-            <div className="prompt-container">
-              <input className="prompt-box" value={input} onChange={onChange} />
-              <div className="prompt-buttons">
-                {/* Tweak classNames to change classes */}
-                <a
-                  className={
-                    isGenerating ? 'generate-button loading' : 'generate-button'
-                  }
-                  onClick={generateAction}
-                >
-                  {/* Tweak to show a loading indicator */}
-                  <div className="generate">
-                    {isGenerating ? (
-                      <span className="loader"></span>
-                    ) : (
-                      <p>Generate</p>
-                    )}
+            <div className="flex-container">
+              <div className="prompt-container">
+                <input className="prompt-box" placeholder="A candid profile of a chad as a hero in a city, intricate, highly detailed, digital painting" value={input} onChange={onChange} />
+                <div className="prompt-buttons">
+                  {/* Tweak classNames to change classes */}
+                  <a
+                    className={
+                      isGenerating ? 'generate-button loading' : 'generate-button'
+                    }
+                    onClick={generateAction}
+                  >
+                    {/* Tweak to show a loading indicator */}
+                    <div className="generate">
+                      {isGenerating ? (
+                        <span className="loader"></span>
+                      ) : (
+                        <p>Generate</p>
+                      )}
+                    </div>
+                  </a>
+                </div>
+                <button className="modal-button" onClick={() => setShowModal(true)}>
+                  <FontAwesomeIcon icon={faInfoCircle} color="white" size="2x" />
+                </button>
+                {showModal && (
+                  <div className="modal">
+                    <button className="normal-button" onClick={handleModalClose}>
+                      <FontAwesomeIcon icon={faTimes} color="white" size="1x" />
+                    </button>
+                    <div className="modal-content">
+                      <h2></h2>
+                    </div>
                   </div>
-                </a>
+                )}
               </div>
             </div>
           </div>
