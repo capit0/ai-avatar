@@ -258,6 +258,15 @@ body {
     color: white;
 }
 
+@media only screen and (max-width: 600px) {
+
+    /* styles to apply when the screen width is 600px or less */
+    .modal {
+        width: 90%;
+        /* make the modal take up a smaller percentage of the screen */
+    }
+}
+
 @media (max-width: 1200px) {
     .container {
         flex-direction: column;
@@ -308,6 +317,8 @@ body {
 }
 
 .modal {
+    width: 50vw;
+    /* make the modal take up half the width of the viewport */
     color: black;
     text-align: center;
     position: fixed;
@@ -318,7 +329,6 @@ body {
     z-index: 1;
     /* set the z-index to 1 to make it appear above other elements*/
     padding: 1rem;
-    width: 900px;
     height: 700px;
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
