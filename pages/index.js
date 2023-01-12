@@ -50,7 +50,7 @@ const Home = () => {
       setRetry(0);
     }
 
-    const finalInput = input.replace("a chad", 'sne1z');
+    const finalInput = input.replace("a chad", 'man sne1z');
     console.log(finalInput)
 
     // Add the fetch request
@@ -121,7 +121,12 @@ const Home = () => {
     }
 
     runRetry();
-  }, [retry]);
+    document.addEventListener("mousedown", handleClickOutside);
+    // here you need to return a function that will remove the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [retry, showModal]);
 
   return (
     <div className="root">
@@ -142,21 +147,22 @@ const Home = () => {
             </h2>
             <div className="flex-container">
               <div className="prompt-container">
-                <input className="prompt-box" placeholder="A candid profile of a chad as a hero in a city, intricate, highly detailed, digital painting" value={input} onChange={onChange} />
+                <input className="prompt-box" placeholder="It needs a couple shots before it hits a homerun, give it some tries and get creative.." value={input} onChange={onChange} />
                 <div className="prompt-buttons">
                   {/* Tweak classNames to change classes */}
                   <a
                     className={
                       isGenerating ? 'generate-button loading' : 'generate-button'
                     }
+                    style={{ color: 'black' }}
                     onClick={generateAction}
                   >
                     {/* Tweak to show a loading indicator */}
-                    <div className="generate">
+                    <div className="generate-button" style={{ color: 'black' }}>
                       {isGenerating ? (
                         <span className="loader"></span>
                       ) : (
-                        <p>Generate</p>
+                        <p color="black">Generate</p>
                       )}
                     </div>
                   </a>
@@ -167,10 +173,27 @@ const Home = () => {
                 {showModal && (
                   <div className="modal">
                     <button className="normal-button" onClick={handleModalClose}>
-                      <FontAwesomeIcon icon={faTimes} color="white" size="1x" />
+                      <FontAwesomeIcon icon={faTimes} color="black" size="1x" />
                     </button>
                     <div className="modal-content">
-                      <h2></h2>
+                      <h2 className="text-base mt-2 mx-4 text-gray-400 font-semibold text-center">
+                        Correctly promping a linguistic model is a skill!  <p class="sub-text">A way to aim for good results is by starting with the TYPE of image, then the subject (a chad in this case) with its particular features, then the BACKGROUND, followed by the ADJECTIVES, and finally the ARTSTYLE. Here is an example of a prompt that is a good basis to experiment with:</p>
+                        <ul class="example">
+                          <li>a digital illustration of a chad in the clouds, intricate, fantasy, elegant, highly detailed, digital painting, artstation, concept art, smooth, sharp focus, illustration, art by artgerm and greg rutkowski and alphonse mucha</li>
+                        </ul>
+
+                        <h2 className="text-base mt-2 mx-4 text-gray-400 font-semibold text-center"> Here are some more prompts to get your imagination going:</h2>
+                        <ul class="bullet-points">
+                          <li>TYPE</li>
+                          <p class="examples">a digital illustration, a photo, oil painting, a candid profile, pencil drawing </p>
+                          <li>BACKGROUND</li>
+                          <p class="examples">a steampunk library with clockwork machines, a medieval town, a waterfall in the woods, a beach with sunset</p>
+                          <li>ADJECTIVES</li>
+                          <p class="examples">vivid colors, detailed, hyperrealistic uhd, fantasy, concept art, photorealistic, trending on artstation </p>
+                          <li>ARTSTYLE</li>
+                          <p class="examples">Josef Thoma, Greg Rutkowski, Aaron Horkey, Dan Mumford</p>
+                        </ul>
+                      </h2>
                     </div>
                   </div>
                 )}
@@ -198,7 +221,7 @@ const Home = () => {
           </div>
         </a>
       </div>
-    </div>
+    </div >
   );
 };
 
