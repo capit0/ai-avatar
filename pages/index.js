@@ -121,11 +121,6 @@ const Home = () => {
     }
 
     runRetry();
-    document.addEventListener("mousedown", handleClickOutside);
-    // here you need to return a function that will remove the event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, [retry, showModal]);
 
   return (
